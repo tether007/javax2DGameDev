@@ -3,6 +3,8 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 import entity.Player;
+import tile.Tile;
+import tile.TileManager;
 
 public class gamePanel extends JPanel implements Runnable{
 
@@ -10,15 +12,23 @@ public class gamePanel extends JPanel implements Runnable{
     final int originalTileSize = 16;
     final int scale= 3;
     final public int tileSize=originalTileSize*scale; //48 is the apparent tile size
-    final int maxScreencol=16;
-    final int maxScreenrow=12;
-    final int screenWidth=tileSize*maxScreencol;
-    final int screenHeight=tileSize*maxScreenrow;
+    final public int maxScreencol=16;
+    final public int maxScreenrow=12;
+    final public int screenWidth=tileSize*maxScreencol;
+    final public int screenHeight=tileSize*maxScreenrow;
+
+    //World Settings:
+    public final int maxWorldCol=50;
+    public final int maxWorldRow=50;
+    public final int WorldWidth=tileSize*maxWorldCol;
+    public final int WorldHeight=tileSize*maxWorldRow;
+
 
     //External classes instanciation:
+    TileManager tileM =new TileManager(this);
     KeyHandler keyHandler=new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this,keyHandler);
+    public Player player = new Player(this,keyHandler);
 
     //FPS:
     int FPS = 60;
@@ -38,11 +48,6 @@ public class gamePanel extends JPanel implements Runnable{
         gameThread.start();
 
     }
-
-    // location and speed of Player
-    int PlayerX=100;
-    int PlayerY=100;
-    int speed=4;
 
 
     //Game thread to update and repaint the 2d object for every 0.0166666 sec
@@ -85,7 +90,9 @@ public class gamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;
+        tileM.draw(g2);
         player.draw(g2);
+
         g2.dispose();
         }
 
