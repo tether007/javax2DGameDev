@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 // super class for any type of entity included in the game(ie players monsters and so on..)
@@ -11,4 +12,9 @@ public class Entity {
 
     public int spriteCounter =0;
     public int spriteNum =1;
+
+    public Rectangle solidArea;
+    public boolean collisionOn = false;
+
 }
+
