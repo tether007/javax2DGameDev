@@ -3,6 +3,8 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 import entity.Player;
+import object.OBJ_Key;
+import object.SuperObject;
 import tile.Tile;
 import tile.TileManager;
 
@@ -30,6 +32,9 @@ public class gamePanel extends JPanel implements Runnable{
     Thread gameThread;
     public Player player = new Player(this,keyHandler);
     public CollisionChecker Cchecker = new CollisionChecker(this);
+    public AssestSetter assestSetter=new AssestSetter(this);
+    public SuperObject[] obj =new SuperObject[10];
+
     //FPS:
     int FPS = 60;
 
@@ -40,6 +45,10 @@ public class gamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+    }
+
+    public void setupGame(){
+        assestSetter.setObject();
     }
 
     //starting the game is the task of this thread
@@ -91,7 +100,15 @@ public class gamePanel extends JPanel implements Runnable{
 
         Graphics2D g2 = (Graphics2D)g;
         tileM.draw(g2);
+
+        for(int i = 0;i< obj.length;i++){
+            if(obj[i]!=null){
+                obj[i].draw(g2,this);
+            }
+        }
+
         player.draw(g2);
+
 
         g2.dispose();
         }
